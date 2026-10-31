@@ -18,12 +18,15 @@ export function useReveal<T extends HTMLElement = HTMLDivElement>() {
       if (!root) return;
       const mm = gsap.matchMedia();
 
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
+      mm.add({ full: "(prefers-reduced-motion: no-preference)", reduce: "(prefers-reduced-motion: reduce)" }, (ctx) => {
+        const reduce = !!ctx.conditions?.reduce; // reduce-motion: gentle fade only, no sliding or masks
         const items = gsap.utils.toArray<HTMLElement>(root.querySelectorAll("[data-reveal]"));
         const isImg = (el: HTMLElement) => el.dataset.reveal === "image";
 
         items.forEach((el) =>
-          isImg(el)
+          reduce
+            ? gsap.set(el, { autoAlpha: 0 })
+            : isImg(el)
             ? gsap.set(el, { clipPath: "inset(10% 10% 10% 10%)", autoAlpha: 0 })
             : gsap.set(el, { autoAlpha: 0, y: 36 })
         );
@@ -32,7 +35,9 @@ export function useReveal<T extends HTMLElement = HTMLDivElement>() {
         const show = (el: HTMLElement, delay = 0) => {
           if (shown.has(el)) return;
           shown.add(el);
-          if (isImg(el)) {
+          if (reduce) {
+            gsap.to(el, { autoAlpha: 1, duration: 0.9, delay });
+          } else if (isImg(el)) {
             gsap.to(el, { clipPath: "inset(0% 0% 0% 0%)", autoAlpha: 1, duration: 1.4, ease: "power3.out", delay });
             const inner = el.querySelector("img");
             if (inner) gsap.fromTo(inner, { scale: 1.18 }, { scale: 1, duration: 1.8, ease: "power3.out", delay });
@@ -65,7 +70,7 @@ export function useReveal<T extends HTMLElement = HTMLDivElement>() {
         );
 
         // Parallax on images that opt in
-        gsap.utils.toArray<HTMLElement>(root.querySelectorAll("img[data-parallax]")).forEach((img) => {
+        if (!reduce) gsap.utils.toArray<HTMLElement>(root.querySelectorAll("img[data-parallax]")).forEach((img) => {
           gsap.fromTo(
             img,
             { yPercent: -7 },

@@ -45,7 +45,7 @@ export default function Layer({
       const next = outer.current?.nextElementSibling as HTMLElement | null;
       if (!next) return;
       const mm = gsap.matchMedia();
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
+      mm.add("(min-width: 0px)", () => {
         gsap
           .timeline({ scrollTrigger: { trigger: next, start: "top bottom", end: "top top", scrub: true } })
           .to(inner.current, { scale: 0.94, transformOrigin: "50% 100%", ease: "none" }, 0)
@@ -57,7 +57,7 @@ export default function Layer({
   );
 
   return (
-    <div ref={outer} data-layer className="sticky motion-reduce:static" style={{ zIndex: z }}>
+    <div ref={outer} data-layer className="sticky" style={{ zIndex: z }}>
       <div
         ref={inner}
         className={`relative overflow-hidden ${bg} ${

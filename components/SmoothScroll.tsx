@@ -16,14 +16,18 @@ function naturalTop(target: HTMLElement): number {
 
 export default function SmoothScroll() {
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    // Anchors are handled below: sticky layers report a shifted position, so native/Lenis anchors would land wrong.
-    const lenis = new Lenis({ lerp: 0.09, anchors: false });
-    lenis.on("scroll", ScrollTrigger.update);
-    const tick = (t: number) => lenis.raf(t * 1000);
-    gsap.ticker.add(tick);
-    gsap.ticker.lagSmoothing(0);
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // Smooth (eased) scrolling only when motion is allowed; the stacked layers work either way.
+    const lenis = reduce ? null : new Lenis({ lerp: 0.09, anchors: false });
+    let tick: ((t: number) => void) | undefined;
+    if (lenis) {
+      lenis.on("scroll", ScrollTrigger.update);
+      tick = (t: number) => lenis.raf(t * 1000);
+      gsap.ticker.add(tick);
+      gsap.ticker.lagSmoothing(0);
+    }
 
+    // Sticky layers report a shifted position, so anchors are scrolled to by hand.
     const onClick = (e: MouseEvent) => {
       const a = (e.target as Element).closest<HTMLAnchorElement>('a[href^="#"]');
       if (!a) return;
@@ -31,14 +35,16 @@ export default function SmoothScroll() {
       const target = id && id !== "top" ? document.getElementById(id) : null;
       if (id && id !== "top" && !target) return;
       e.preventDefault();
-      lenis.scrollTo(target ? naturalTop(target) : 0, { duration: 1.6 });
+      const y = target ? naturalTop(target) : 0;
+      if (lenis) lenis.scrollTo(y, { duration: 1.6 });
+      else window.scrollTo({ top: y, behavior: "smooth" });
     };
     document.addEventListener("click", onClick);
 
     return () => {
       document.removeEventListener("click", onClick);
-      gsap.ticker.remove(tick);
-      lenis.destroy();
+      if (tick) gsap.ticker.remove(tick);
+      lenis?.destroy();
     };
   }, []);
   return null;
