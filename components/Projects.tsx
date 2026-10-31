@@ -39,6 +39,7 @@ function ProjectCard({ p, big, onOpen }: { p: Project; big: boolean; onOpen: () 
       onFocus={start}
       onBlur={stop}
       data-cursor="View"
+      data-reveal
       className={`group text-left ${big ? "lg:col-span-2" : ""}`}
     >
       <div className={`relative overflow-hidden bg-bone ${big ? "aspect-[16/10]" : "aspect-[4/5]"}`}>
