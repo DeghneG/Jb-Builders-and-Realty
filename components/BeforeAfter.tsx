@@ -15,26 +15,6 @@ const PAIRS = [
     afterLabel: "Completed",
     note: "Same street, same view: from scaffolding and bare walls to a finished three-storey facade.",
   },
-  {
-    key: "road",
-    title: "Farm-to-Market Road",
-    place: "Isabang, Tayabas City",
-    before: "/images/road-4.jpg",
-    after: "/images/road-after.jpg",
-    beforeLabel: "Forms and base laid",
-    afterLabel: "Concrete poured",
-    note: "Forms set and the base prepared, then the slab poured so farmers can get their produce to market.",
-  },
-  {
-    key: "home",
-    title: "Residence with Roof Deck",
-    place: "Dapdap, Tayabas City",
-    before: "/images/home-3.jpg",
-    after: "/images/home-2.jpg",
-    beforeLabel: "Floor tiling underway",
-    afterLabel: "Finished interior",
-    note: "The living space as tiling goes down, and the same room with the floor and finishes complete.",
-  },
 ];
 
 export default function BeforeAfter() {
@@ -84,29 +64,12 @@ export default function BeforeAfter() {
             Raw site to <span className="italic text-sand">finished building.</span>
           </h2>
           <p data-reveal className="mt-7 max-w-md leading-relaxed text-bone/70">
-            Drag the line, or pick a project. Every pair below is the same site, photographed by our team
-            before and after the work.
+            Drag the line to compare the same site, photographed by our team before and after the work.
           </p>
 
-          <div data-reveal className="mt-10 divide-y divide-bone/15 border-y border-bone/15" role="tablist" aria-label="Choose a project">
-            {PAIRS.map((p, n) => (
-              <button
-                key={p.key}
-                role="tab"
-                aria-selected={n === i}
-                onClick={() => pick(n)}
-                className={`group flex w-full items-center justify-between gap-6 py-5 text-left transition-colors ${
-                  n === i ? "text-bone" : "text-bone/65 hover:text-bone"
-                }`}
-              >
-                <span>
-                  <span className="eyebrow mr-4 !text-[0.66rem] text-sand">{String(n + 1).padStart(2, "0")}</span>
-                  <span className="display text-2xl">{p.title}</span>
-                  <span className="mt-1 block pl-9 text-sm text-bone/65">{p.place}</span>
-                </span>
-                <span aria-hidden className={`h-px transition-all duration-500 ${n === i ? "w-10 bg-sand" : "w-4 bg-bone/30 group-hover:w-8"}`} />
-              </button>
-            ))}
+          <div data-reveal className="mt-10 border-y border-bone/15 py-5">
+            <span className="display text-2xl">{pair.title}</span>
+            <span className="mt-1 block text-sm text-bone/65">{pair.place}</span>
           </div>
           <p className="mt-6 max-w-md text-sm leading-relaxed text-bone/60" aria-live="polite">
             {pair.note}

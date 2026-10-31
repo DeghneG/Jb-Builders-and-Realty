@@ -1,5 +1,6 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { gsap } from "@/lib/gsap";
 import type { Project } from "@/lib/data";
@@ -67,7 +68,7 @@ export default function Lightbox({ project, onClose }: { project: Project; onClo
     };
   }, []);
 
-  return (
+  return createPortal(
     <div
       ref={root}
       role="dialog"
@@ -153,6 +154,7 @@ export default function Lightbox({ project, onClose }: { project: Project; onClo
           ))}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
