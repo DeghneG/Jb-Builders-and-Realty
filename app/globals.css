@@ -1,0 +1,320 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-ink: #12201f;
+  --color-ink-2: #1b2e2d;
+  --color-sand: #d9b98a;
+  --color-sand-deep: #74562a;
+  --color-bone: #f6f2ea;
+  --color-paper: #fbf9f4;
+  --color-line: rgba(18, 32, 31, 0.14);
+  --font-display: var(--font-display-face);
+  --font-sans: var(--font-body-face);
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  overflow-x: clip;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body-face), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-sand);
+  color: var(--color-ink);
+}
+
+.eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.display {
+  font-family: var(--font-display-face), system-ui, sans-serif;
+  font-weight: 300;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+}
+
+/* Blueprint grid used behind the hero and plan sheets */
+.grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(217, 185, 138, 0.09) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(217, 185, 138, 0.09) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+.grid-paper {
+  background-image:
+    linear-gradient(to right, rgba(138, 106, 58, 0.16) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(138, 106, 58, 0.16) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+/* Entrance animations that can never leave text hidden: the end state is the visible state */
+.rise {
+  animation: rise 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--d, 0s);
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise-line {
+  animation: rise-line 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--d, 0s);
+}
+@keyframes rise-line {
+  from {
+    transform: translateY(115%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* Ambient hero motion: pure CSS, runs from first paint, independent of any script */
+.grid-drift {
+  will-change: transform;
+  animation: grid-drift 30s linear infinite;
+}
+@keyframes grid-drift {
+  to {
+    transform: translate3d(64px, 64px, 0);
+  }
+}
+.kb {
+  animation: kb 16s ease-in-out infinite alternate;
+}
+@keyframes kb {
+  from {
+    transform: scale(1.02) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.14) translate3d(-2%, -1.5%, 0);
+  }
+}
+.ambient-float {
+  animation: float 7s ease-in-out infinite alternate;
+}
+@keyframes float {
+  from {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  to {
+    transform: translate3d(0, -14px, 0) rotate(0.6deg);
+  }
+}
+.spin-slow {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spin-slow 70s linear infinite;
+}
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.scan {
+  background: linear-gradient(to bottom, transparent, rgba(217, 185, 138, 0.35), transparent);
+  height: 22%;
+  animation: scan 5.5s ease-in-out infinite;
+}
+@keyframes scan {
+  from {
+    transform: translateY(-110%);
+  }
+  to {
+    transform: translateY(520%);
+  }
+}
+.hex {
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+/* Opens from the centre on first paint, with no script needed (keeps the hero photo off the JS critical path) */
+.hex-open {
+  animation: hex-open 1.5s cubic-bezier(0.77, 0, 0.175, 1) 0.05s both;
+}
+@keyframes hex-open {
+  from {
+    clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%);
+  }
+  to {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  }
+}
+
+.line-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.95rem 1.6rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  border: 1px solid currentColor;
+  transition: background-color 0.4s, color 0.4s, border-color 0.4s;
+}
+.btn-sand {
+  background: var(--color-sand);
+  color: var(--color-ink);
+  border-color: var(--color-sand);
+}
+.btn-sand:hover {
+  background: transparent;
+  color: var(--color-sand);
+}
+.btn-ghost:hover {
+  background: var(--color-bone);
+  color: var(--color-ink);
+}
+.btn-ink:hover {
+  background: var(--color-ink);
+  color: var(--color-bone);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--d, 40s) linear infinite;
+}
+.marquee-rev {
+  animation-direction: reverse;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.progress-fill {
+  transform-origin: left;
+  animation: progress 5.5s linear forwards;
+}
+@keyframes progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.map-pin {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: var(--color-ink);
+  border: 3px solid var(--color-sand);
+  box-shadow: 0 0 0 2px var(--color-ink);
+}
+.map-pin::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 9999px;
+  border: 2px solid var(--color-sand-deep);
+  animation: pulse 2.4s ease-out infinite;
+}
+@keyframes pulse {
+  from {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+.leaflet-container {
+  font-family: var(--font-body-face), system-ui, sans-serif;
+  background: var(--color-bone);
+}
+.map-label {
+  background: var(--color-ink);
+  color: var(--color-bone);
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 6px 10px;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.map-label::before {
+  display: none;
+}
+.map-pin {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s;
+  cursor: pointer;
+}
+.map-pin.active {
+  transform: scale(1.5);
+  background: var(--color-sand);
+}
+.map-label {
+  transition: background-color 0.3s, padding 0.3s;
+}
+.map-label-active {
+  background: var(--color-sand);
+  color: var(--color-ink);
+  z-index: 800;
+  white-space: normal;
+  width: 170px;
+}
+.map-label-detail {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+  opacity: 0.8;
+}
+.leaflet-tile-pane {
+  filter: grayscale(1) sepia(0.2) contrast(0.95);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-sand);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Marquees, the hero progress bar and pulses keep running (slow, horizontal, small). */
+  * {
+    transition-duration: 0.01ms !important;
+  }
+  .btn,
+  [class*="transition-colors"] {
+    transition-duration: 0.3s !important;
+  }
+}
+
