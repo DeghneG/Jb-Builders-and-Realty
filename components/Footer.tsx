@@ -19,7 +19,12 @@ const link = "inline-block py-1.5 text-bone/75 transition-colors hover:text-sand
 export default function Footer() {
   const ref = useReveal<HTMLElement>();
   return (
-    <footer ref={ref} className="bg-ink text-bone">
+    <footer ref={ref} className="relative isolate overflow-hidden bg-ink text-bone">
+      {/* Background photo: dimmed, with a dark wash that gets stronger behind the text */}
+      <div className="absolute inset-0 -z-10" aria-hidden>
+        <Image src="/images/footer.jpg" alt="" fill sizes="100vw" quality={80} className="object-cover object-center opacity-[0.3]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink via-ink/55 to-ink/85" />
+      </div>
       <div className="mx-auto max-w-[1400px] px-6 pt-20 md:px-10 md:pt-28">
         {/* Call to action */}
         <div className="grid gap-10 border-b border-bone/15 pb-16 md:grid-cols-12 md:items-end md:pb-20">
@@ -111,10 +116,8 @@ export default function Footer() {
 
       {/* Giant wordmark */}
       <div className="overflow-hidden" aria-hidden>
-        <p data-reveal className="display select-none px-4 pb-[0.16em] text-center text-[clamp(3.4rem,15.6vw,17rem)] leading-[0.86] tracking-[-0.045em] text-bone/95">
-          JB Builders
-          <br />
-          <span className="italic text-sand">and Realty</span>
+        <p data-reveal className="display select-none whitespace-nowrap px-4 pb-[0.16em] text-center text-[11.7vw] leading-[0.95] tracking-[-0.045em] text-bone/95">
+          JB Builders <span className="italic text-sand">and Realty</span>
         </p>
       </div>
       <h2 className="sr-only">{SITE.name}</h2>
