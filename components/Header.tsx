@@ -27,13 +27,13 @@ export default function Header() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        dark ? "bg-paper/97 backdrop-blur-md border-b border-line text-ink" : "text-bone"
+        dark ? "border-b border-bone/10 bg-ink/85 text-bone backdrop-blur-md" : "border-b border-transparent text-bone"
       }`}
     >
       <div className="mx-auto flex h-[76px] max-w-[1400px] items-center justify-between px-6 md:px-10">
         <a href="#top" className="flex items-center gap-3" aria-label="JB Builders & Realty, back to top">
           <Image
-            src={dark ? "/brand/mark-dark.png" : "/brand/mark-light.png"}
+            src="/brand/mark-light.png"
             alt=""
             width={320} height={350}
             className="h-11 w-auto"
@@ -61,7 +61,7 @@ export default function Header() {
           ))}
           <a
             href="#contact"
-            className={`btn ${dark ? "btn-ink" : "btn-ghost"} !py-2.5`}
+            className="btn btn-ghost !py-2.5"
           >
             Get a quote
           </a>
